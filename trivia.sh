@@ -5,38 +5,37 @@ FILE_TMP="${DOWNLOAD_PATH}/.temp"
 
 #下载资源
 function download(){
-echo "客观稍等,下载资源......"
-if [[ ! -e ${URLS} ]]; then
-  #statements
-  echo "资源列表不存在"
-  exit 1
-fi
-exec <  ${URLS} 
-read URL
-while [[ $? -eq 0 ]]
-do 
-  #检查url的有效性
-  #echo "读取到一个网址 ${URL}"
-  #下载html文件
-  `wget -P "${DOWNLOAD_PATH}" "${URL}" >>"${DOWNLOAD_PATH}/.log" 2>&1 `
-  read URL 
-done
-
-for file in  ${DOWNLOAD_PATH}/[^.]* ; do
-  #statements
-  #echo "文件 : $file"
-  if [[ -r $file && $file == *.html ]]; then
+  echo "客观稍等,下载资源......"
+  if [[ ! -e ${URLS} ]]; then
     #statements
-    # echo "$file 满足条件"
+    echo "资源列表不存在"
+    exit 1
+  fi
+  exec <  ${URLS} 
+  read URL
+  while [[ $? -eq 0 ]]
+  do 
+    #检查url的有效性
+    #echo "读取到一个网址 ${URL}"
+    #下载html文件
+    `wget -P "${DOWNLOAD_PATH}" "${URL}" >>"${DOWNLOAD_PATH}/.log" 2>&1 `
+    read URL 
+  done
 
+  for file in  ${DOWNLOAD_PATH}/[^.]* ; do
+    #statements
+    #echo "文件 : $file"
+    if [[ -r $file && $file == *.html ]]; then
+      #statements
+      # echo "$file 满足条件"
 
     #获取下载到的文件 筛选出信息 导入 临时文件中
     cat $file | grep "<p>\d\+\..*</p>" >> $FILE_TMP 
     #删除 <p> 标签
 
 
-  fi
-done
+    fi
+  done
 
 #去除标签信息
 sed -i ''  -e "s/<p>//g"  -e "s/<\/p>//g"  $FILE_TMP 
@@ -69,9 +68,23 @@ echo '#】'
 
 
 }
+function checkTools(){
 
+  indicateHomeBrew=`command -v brew`
+  if [[ ! -x `command -v brew` ]]; then
+    echo "安装brew..."
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
 
+  if [[ !  -x `command -v wget` ]]; then
+    #statements
+    echo "安装wget"
+    brew install wget
+  fi
 
+}
+
+checkTools
 if [[ -r $FILE_TMP ]]; then
   #statements
   getOneMsg 
