@@ -5,7 +5,7 @@ FILE_TMP="${DOWNLOAD_PATH}/.temp"
 
 #下载资源
 function download(){
-echo "下载资源......"
+echo "客观稍等,下载资源......"
 if [[ ! -e ${URLS} ]]; then
   #statements
   echo "资源列表不存在"

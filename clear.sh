@@ -2,6 +2,8 @@ CUR_PATH=`pwd`
 DOWNLOAD_PATH="${CUR_PATH}/download"
 URLS="${DOWNLOAD_PATH}/.urls"
 FILE_TMP="${DOWNLOAD_PATH}/.temp"
+FILE_LOG="${DOWNLOAD_PATH}/.log"
 
 rm $DOWNLOAD_PATH/[^.]*
 rm $FILE_TMP
+echo '' > $FILE_LOG
