@@ -5,7 +5,7 @@ FILE_TMP="${DOWNLOAD_PATH}/.temp"
 
 #下载资源
 function download(){
-  echo "客观稍等,下载资源"
+  echo "客官稍等,下载资源"
   if [[ ! -e ${URLS} ]]; then
     #statements
     echo "资源列表不存在"
@@ -66,11 +66,8 @@ num=`echo $RANDOM`
 #echo "num : $num"
 #打印这条信息
 echo "小主，这是您的冷知识^_^:"
-echo '【#'
-echo `sed -n "${num}p" ${FILE_TMP} `
-echo '#】'
-
-
+msg=`sed -n "${num}p" ${FILE_TMP} `
+echo $msg |  awk '{print "【#"  $0 "#】"  }'
 }
 
 function checkTools(){
