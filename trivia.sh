@@ -1,3 +1,4 @@
+#!/bin/zsh
 CUR_PATH=`pwd`
 DOWNLOAD_PATH="${CUR_PATH}/download"
 URLS="${DOWNLOAD_PATH}/.urls"
@@ -79,12 +80,21 @@ function checkTools(){
   if [[ ! -x `command -v brew` ]]; then
     echo "安装brew..."
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    if [[ $? -ne 0 ]]; then
+      #statements
+     { echo "安装brew失败,请重试" ;   exit 1 ;}
+      exit 1
+    fi
   fi
 
   if [[ !  -x `command -v wget` ]]; then
     #statements
     echo "安装wget"
     brew install wget
+     if [[ $? -ne 0 ]]; then
+      #statements
+      { echo "安装wget失败,请重试" ;   exit 1 ;}
+    fi
   fi
 
 }
