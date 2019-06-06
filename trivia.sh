@@ -44,8 +44,8 @@ function download(){
 #去除标签信息
 sed -i ''  \
   -e "s/<p>//g"  -e "s/<\/p>//g" \
-  -e  "s/<a.*a>//g" -e "s/\[.*\]//g"  \
-  -e"s/<div.*>//g" -e  "s/^[0-9]\{1,10\}\.//g" \
+  -e "s/<.*>//g" \
+  -e  "s/^[0-9]\{1,10\}\.//g" \
   $FILE_TMP 
 }
 
@@ -72,38 +72,34 @@ echo $msg |  awk '{print "【#"  $0 "#】"  }'
 }
 
 function checkTools(){
-
-  indicateHomeBrew=`command -v brew`
   if [[ ! -x `command -v brew` ]]; then
     echo "安装brew..."
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     if [[ $? -ne 0 ]]; then
       #statements
-     { echo "安装brew失败,请重试" ;   exit 1 ;}
+      { echo "安装brew失败,请重试" ;   exit 1 ;}
       exit 1
     fi
-  fi
-
-  if [[ !  -x `command -v wget` ]]; then
-    #statements
-    echo "安装wget"
-    brew install wget
-     if [[ $? -ne 0 ]]; then
-      #statements
-      { echo "安装wget失败,请重试" ;   exit 1 ;}
     fi
+
+    if [[ !  -x `command -v wget` ]]; then
+      #statements
+      echo "安装wget"
+      brew install wget
+      if [[ $? -ne 0 ]]; then
+        #statements
+        { echo "安装wget失败,请重试" ;   exit 1 ;}
+      fi
+      fi
+
+    }
+
+  checkTools
+  if [[ ! -r $FILE_TMP ]]; then
+    #statements
+    download
   fi
-
-}
-
-checkTools
-if [[ -r $FILE_TMP ]]; then
-  #statements
-  getOneMsg 
-else
-  download
   getOneMsg
-fi
 
 
 
