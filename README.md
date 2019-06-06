@@ -9,7 +9,7 @@ git clone git@github.com:zhouhong0607/Trivia.git
 ### 使用
 cd Trivia/
 
-chomod 775 trivia.sh
+chmod 775 trivia.sh
 
 ./trivia.sh
 
