@@ -20,9 +20,10 @@ function download(){
     #echo "读取到一个网址 ${URL}"
     #下载html文件
     echo ".\c"
-    #`wget -P "${DOWNLOAD_PATH}" "${URL}" >>"${DOWNLOAD_PATH}/.log" 2>&1 `
-    `wget -P "${DOWNLOAD_PATH}" "${URL}" >/dev/null 2>&1`
-    read URL 
+    #设置重试次数10次  超时时间30s
+   # `wget -t 10 --timeout=30 -P "${DOWNLOAD_PATH}" "${URL}" >/dev/null 2>&1`
+    `wget -t 10 --timeout=30 -P "${DOWNLOAD_PATH}" "${URL}" >>"${DOWNLOAD_PATH}/.log" 2>&1 `
+    read URL
   done
   echo "download done"
   for file in  ${DOWNLOAD_PATH}/[^.]* ; do
