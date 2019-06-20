@@ -1,0 +1,14 @@
+# this script is use to dig href url from html file
+s/<a \([^>]*\)>/--SYN--\1--FIN--/g;
+s/[><]//g;
+s/--FIN--/>/g;
+s/--SYN--/</g;
+s/^\(.*\)$/>\1</;
+s/>[^<]*</></g;
+s#<[^>]*href="\(.*\.html\)"[^>]*>#@\1@#g;
+s/<[^>]*>//g;
+s/@@/\
+/g;
+s/[><'"@]//g;
+
+/^ *$/d;
